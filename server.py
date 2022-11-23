@@ -15,11 +15,11 @@ def handle_request(request: bytes) -> bytes:
     return response
 
 
-def server():
+def server(host: str = config.HOST, port: int = config.PORT):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as skt:
-        skt.bind((config.HOST, config.PORT))
+        skt.bind((host, port))
         skt.listen()
-        logger.info('Socket created. Bind to %s:%s', config.HOST, config.PORT)
+        logger.info('Socket created. Bind to %s:%s', host, port)
 
         while True:
             try:
@@ -32,5 +32,11 @@ def server():
 
             with client:
                 request = client.recv(config.RECEIVE_SIZE)
+                logger.debug(
+                    'Client %s:%s send \'%s\'',
+                    address[0], address[1], request.decode(encoding='utf-8')
+                )
+
                 response = handle_request(request)
                 client.sendall(response)
+                logger.info('Server send response to client %s:%s', address[0], address[1])
