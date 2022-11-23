@@ -2,7 +2,7 @@ import argparse
 from threading import Thread
 
 import config
-import server
+import synchronous_server
 import client
 
 
