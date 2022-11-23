@@ -12,16 +12,16 @@ def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser('Testing of synchronous web-service')
 
     parser.add_argument(
-        '--host', '-H', help='Set server\'s host', type=str,
+        '--host', '-H', help='Set host of server', type=str,
         default=config.HOST
     )
     parser.add_argument(
-        '--port', '-p', help='Set server\'s port', type=int,
+        '--port', '-p', help='Set port of server', type=int,
         default=config.PORT
     )
 
     parser.add_argument(
-        '--count', '-c', help='Set client\'s count', type=int,
+        '--count', '-c', help='Set count of clients', type=int,
         default=1
     )
 
