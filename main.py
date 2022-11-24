@@ -1,9 +1,17 @@
+import enum
 import argparse
 from threading import Thread
 
-import config
 import synchronous_server
+import thread_server
+import config
 import client
+
+
+class ServerType(enum.Enum):
+    SYNCHRONOUS = 'S'
+    THREAD = 'T'
+    ASYNCHRONOUS = 'A'
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -23,12 +31,24 @@ def get_parser() -> argparse.ArgumentParser:
         default=1
     )
 
+    parser.add_argument(
+        '--type', '-t', help='Type of server. S - synchronous, T - threads, A - asynchronous',
+        type=ServerType, required=True
+    )
+
     return parser
 
 
 def main():
     parser = get_parser()
     args = parser.parse_args()
+
+    if args.type == ServerType.SYNCHRONOUS:
+        server = synchronous_server
+    elif args.type == ServerType.THREAD:
+        server = thread_server
+    else:
+        print('A')
 
     server_thread = Thread(target=server.server, args=(args.host, args.port), daemon=True)
     server_thread.start()
