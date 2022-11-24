@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+    format='%(asctime)s\t%(name)-20s\t%(threadName)-35s\t%(levelname)-20s\t%(message)s'
 )
 
 load_dotenv()
