@@ -30,13 +30,13 @@ def requests(client_count: int, host: str = config.HOST, port: int = config.PORT
     request_threads = [
         Thread(
             target=client_request,
-            name=f'Thread-{i}',
             args=(
                 randomizer_person.full_name(), randomizer_text.word(),
                 host, port
-            )
+            ),
+            daemon=True
         )
-        for i in range(client_count)
+        for _ in range(client_count)
     ]
 
     logger.info('Clients created')
